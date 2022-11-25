@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  mysql:
+    build: ./mysql
+    container_name: db
+    networks:
+      - teste
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/schema.sql:/docker-entrypoint-initdb.d/1.sql:ro
+
+  node:
+    build: ./nodejs
+    container_name: app
+    networks:
+      - teste
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./nodejs/app:/app/src
+    depends_on:
+      - mysql
+    
+
+networks:
+  teste:
+
