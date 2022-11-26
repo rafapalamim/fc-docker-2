@@ -6,8 +6,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.1",
     "express": "^4.16.4",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.20"
+  },
+  "scripts": {
+    "server": "nodemon /app/src/app.js"
   }
 }

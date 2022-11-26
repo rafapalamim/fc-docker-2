@@ -5,27 +5,38 @@ services:
     build: ./mysql
     container_name: db
     networks:
-      - teste
+      - fc
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./mysql/data:/var/lib/mysql
+      #- ./mysql/data:/var/lib/mysql
       - ./mysql/schema.sql:/docker-entrypoint-initdb.d/1.sql:ro
 
   node:
     build: ./nodejs
     container_name: app
     networks:
-      - teste
+      - fc
     ports:
-      - "3001:3000"
-    volumes:
-      - ./nodejs/app:/app/src
+      - "3000:3000"
+    #volumes:
+    # - ./nodejs/app:/app/src
     depends_on:
       - mysql
-    
+
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - "8080:80"
+    networks:
+      - fc
+    depends_on:
+      - mysql
+      - node
 
 networks:
-  teste:
+  fc:
+
 
